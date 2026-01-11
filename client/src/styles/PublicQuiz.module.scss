@@ -1,0 +1,37 @@
+.page {
+  // min-height: 100vh;
+  background: linear-gradient(135deg, #020617, #0f172a);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #e5e7eb;
+}
+
+.wrapper {
+  width: 100%;
+}
+
+/* Loading state */
+.loading {
+  font-size: 16px;
+  color: #9ca3af;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #1e293b;
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

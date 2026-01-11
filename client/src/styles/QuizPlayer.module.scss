@@ -1,0 +1,629 @@
+.container {
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #020617, #0f172a);
+  color: #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+  position: relative; 
+}
+
+/* CLOSE BUTTON STYLE */
+.closeBtn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(4px);
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  z-index: 10;
+
+  &:hover {
+    background: rgba(239, 68, 68, 0.2); // Red tint
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.4);
+    transform: rotate(90deg);
+  }
+}
+
+.header {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  margin-top: 20px;
+
+  h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #818cf8;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80%; // Increased slightly for Review Page title
+  }
+}
+
+.progress {
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.card {
+  width: 100%;
+  max-width: 800px;
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  margin-bottom: 24px;
+  
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.questionText {
+  font-size: 24px;
+  line-height: 1.5;
+  margin-bottom: 32px;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.option {
+  width: 100%;
+  padding: 18px 20px;
+  border-radius: 12px;
+  border: 1px solid #334155;
+  background: #1e293b;
+  color: #cbd5e1;
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+
+  // Only hover if it's NOT a result view (Result view items are static divs usually)
+  // But since we use same class, it's fine.
+  &:hover {
+    border-color: #6366f1;
+    background: #27354f;
+    transform: translateX(4px);
+  }
+}
+
+.selected {
+  background: rgba(99, 102, 241, 0.15);
+  border-color: #6366f1;
+  color: #e0e7ff;
+  font-weight: 500;
+  box-shadow: 0 0 0 1px #6366f1 inset;
+}
+
+/* --- Navigation Buttons --- */
+.navigation {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+
+  button {
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    background: #1e293b;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover:not(:disabled) {
+      background: #334155;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      filter: grayscale(0.5);
+    }
+  }
+}
+
+.submitBtn {
+  background: #6366f1 !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+  color: white;
+  padding: 14px 28px; // Ensure padding matches standard
+  border-radius: 12px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 16px;
+
+  &:hover:not(:disabled) {
+    background: #4f46e5 !important;
+    transform: translateY(-2px);
+  }
+}
+
+/* --- View Answers Specific Styles --- */
+
+.correct {
+  background-color: rgba(34, 197, 94, 0.15) !important;
+  border-color: #22c55e !important;
+  color: #86efac !important;
+  
+  &::after {
+    content: "✓";
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    color: #22c55e;
+  }
+}
+
+.wrong {
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  border-color: #ef4444 !important;
+  color: #fca5a5 !important;
+  opacity: 0.8;
+
+  &::after {
+    content: "✕";
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    color: #ef4444;
+  }
+}
+
+/* NEW FOOTER FOR VIEW ANSWERS PAGE */
+.footer {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 40px; 
+
+  // Make the button full width on mobile, auto on desktop?
+  // Let's keep it wide for easy clicking.
+  button {
+    width: 100%;
+  }
+}
+
+
+
+
+
+
+
+
+
+// .container {
+//   min-height: 100vh;
+//   padding: 40px 20px;
+//   background: linear-gradient(135deg, #020617, #0f172a);
+//   color: #e5e7eb;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   font-family: 'Inter', sans-serif;
+//   position: relative; // Needed for absolute positioning of Close button
+// }
+
+// /* NEW CLOSE BUTTON STYLE */
+// .closeBtn {
+//   position: absolute;
+//   top: 24px;
+//   right: 24px;
+//   width: 40px;
+//   height: 40px;
+//   border-radius: 50%;
+//   border: 1px solid rgba(255, 255, 255, 0.1);
+//   background: rgba(30, 41, 59, 0.6);
+//   backdrop-filter: blur(4px);
+//   color: #94a3b8;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: pointer;
+//   transition: all 0.3s ease;
+//   font-size: 16px;
+//   z-index: 10;
+
+//   &:hover {
+//     background: rgba(239, 68, 68, 0.2); // Red tint
+//     color: #ef4444;
+//     border-color: rgba(239, 68, 68, 0.4);
+//     transform: rotate(90deg);
+//   }
+// }
+
+// .header {
+//   width: 100%;
+//   max-width: 800px;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   margin-bottom: 24px;
+//   margin-top: 20px; // Add some space so it doesn't overlap with close button on small screens
+
+//   h1 {
+//     font-size: 24px;
+//     font-weight: 700;
+//     color: #818cf8;
+//     margin: 0;
+//     // Handle long topic names
+//     white-space: nowrap;
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+//     max-width: 60%; 
+//   }
+// }
+
+// .progress {
+//   width: 100%;
+//   max-width: 800px;
+//   margin-bottom: 12px;
+//   font-size: 13px;
+//   color: #94a3b8;
+//   text-transform: uppercase;
+//   letter-spacing: 0.5px;
+//   font-weight: 600;
+// }
+
+// .card {
+//   width: 100%;
+//   max-width: 800px;
+//   background: #0f172a;
+//   border: 1px solid #1e293b;
+//   border-radius: 20px;
+//   padding: 40px;
+//   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+//   margin-bottom: 24px; /* spacing for view answers list */
+  
+//   /* Transition for smooth switching */
+//   animation: fadeIn 0.4s ease-out;
+// }
+
+// @keyframes fadeIn {
+//   from { opacity: 0; transform: translateY(10px); }
+//   to { opacity: 1; transform: translateY(0); }
+// }
+
+// .questionText {
+//   font-size: 24px;
+//   line-height: 1.5;
+//   margin-bottom: 32px;
+//   font-weight: 600;
+//   color: #f1f5f9;
+// }
+
+// .options {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 12px;
+// }
+
+// .option {
+//   width: 100%;
+//   padding: 18px 20px;
+//   border-radius: 12px;
+//   border: 1px solid #334155;
+//   background: #1e293b;
+//   color: #cbd5e1;
+//   font-size: 16px;
+//   text-align: left;
+//   cursor: pointer;
+//   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+//   position: relative;
+//   overflow: hidden;
+
+//   &:hover {
+//     border-color: #6366f1;
+//     background: #27354f;
+//     transform: translateX(4px);
+//   }
+// }
+
+// .selected {
+//   background: rgba(99, 102, 241, 0.15);
+//   border-color: #6366f1;
+//   color: #e0e7ff;
+//   font-weight: 500;
+//   box-shadow: 0 0 0 1px #6366f1 inset;
+// }
+
+// /* --- Navigation Buttons --- */
+// .navigation {
+//   width: 100%;
+//   max-width: 800px;
+//   display: flex;
+//   justify-content: space-between;
+//   margin-top: 10px;
+
+//   button {
+//     padding: 12px 24px;
+//     border-radius: 12px;
+//     border: 1px solid transparent;
+//     background: #1e293b;
+//     color: white;
+//     font-weight: 600;
+//     cursor: pointer;
+//     transition: all 0.2s;
+
+//     &:hover:not(:disabled) {
+//       background: #334155;
+//     }
+
+//     // Styles for Disabled state (Requirement 3)
+//     &:disabled {
+//       opacity: 0.5;
+//       cursor: not-allowed;
+//       filter: grayscale(0.5);
+//     }
+//   }
+// }
+
+// .submitBtn {
+//   background: #6366f1 !important;
+//   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+
+//   &:hover:not(:disabled) {
+//     background: #4f46e5 !important;
+//     transform: translateY(-2px);
+//   }
+// }
+
+// /* --- View Answers Specific Styles --- */
+
+// .correct {
+//   background-color: rgba(34, 197, 94, 0.15) !important;
+//   border-color: #22c55e !important;
+//   color: #86efac !important;
+  
+//   /* Add checkmark icon using pseudo-element purely via CSS */
+//   &::after {
+//     content: "✓";
+//     position: absolute;
+//     right: 20px;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     font-weight: bold;
+//     color: #22c55e;
+//   }
+// }
+
+// .wrong {
+//   background-color: rgba(239, 68, 68, 0.15) !important;
+//   border-color: #ef4444 !important;
+//   color: #fca5a5 !important;
+//   opacity: 0.8;
+
+//   &::after {
+//     content: "✕";
+//     position: absolute;
+//     right: 20px;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     font-weight: bold;
+//     color: #ef4444;
+//   }
+// }
+
+
+
+// .container {
+//   min-height: 100vh;
+//   padding: 40px 20px;
+//   background: linear-gradient(135deg, #020617, #0f172a);
+//   color: #e5e7eb;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   font-family: 'Inter', sans-serif;
+// }
+
+// .header {
+//   width: 100%;
+//   max-width: 800px;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   margin-bottom: 24px;
+
+//   h1 {
+//     font-size: 24px;
+//     font-weight: 700;
+//     color: #818cf8;
+//     margin: 0;
+//   }
+// }
+
+// .progress {
+//   width: 100%;
+//   max-width: 800px;
+//   margin-bottom: 12px;
+//   font-size: 13px;
+//   color: #94a3b8;
+//   text-transform: uppercase;
+//   letter-spacing: 0.5px;
+//   font-weight: 600;
+// }
+
+// .card {
+//   width: 100%;
+//   max-width: 800px;
+//   background: #0f172a;
+//   border: 1px solid #1e293b;
+//   border-radius: 20px;
+//   padding: 40px;
+//   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+//   margin-bottom: 24px; /* spacing for view answers list */
+  
+//   /* Transition for smooth switching */
+//   animation: fadeIn 0.4s ease-out;
+// }
+
+// @keyframes fadeIn {
+//   from { opacity: 0; transform: translateY(10px); }
+//   to { opacity: 1; transform: translateY(0); }
+// }
+
+// .questionText {
+//   font-size: 24px;
+//   line-height: 1.5;
+//   margin-bottom: 32px;
+//   font-weight: 600;
+//   color: #f1f5f9;
+// }
+
+// .options {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 12px;
+// }
+
+// .option {
+//   width: 100%;
+//   padding: 18px 20px;
+//   border-radius: 12px;
+//   border: 1px solid #334155;
+//   background: #1e293b;
+//   color: #cbd5e1;
+//   font-size: 16px;
+//   text-align: left;
+//   cursor: pointer;
+//   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+//   position: relative;
+//   overflow: hidden;
+
+//   &:hover {
+//     border-color: #6366f1;
+//     background: #27354f;
+//     transform: translateX(4px);
+//   }
+// }
+
+// .selected {
+//   background: rgba(99, 102, 241, 0.15);
+//   border-color: #6366f1;
+//   color: #e0e7ff;
+//   font-weight: 500;
+//   box-shadow: 0 0 0 1px #6366f1 inset;
+// }
+
+// /* --- Navigation Buttons --- */
+// .navigation {
+//   width: 100%;
+//   max-width: 800px;
+//   display: flex;
+//   justify-content: space-between;
+//   margin-top: 10px;
+
+//   button {
+//     padding: 12px 24px;
+//     border-radius: 12px;
+//     border: 1px solid transparent;
+//     background: #1e293b;
+//     color: white;
+//     font-weight: 600;
+//     cursor: pointer;
+//     transition: all 0.2s;
+
+//     &:hover:not(:disabled) {
+//       background: #334155;
+//     }
+
+//     &:disabled {
+//       opacity: 0.5;
+//       cursor: not-allowed;
+//     }
+//   }
+// }
+
+// .submitBtn {
+//   background: #6366f1 !important;
+//   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+
+//   &:hover {
+//     background: #4f46e5 !important;
+//     transform: translateY(-2px);
+//   }
+// }
+
+// /* --- View Answers Specific Styles --- */
+
+// .correct {
+//   background-color: rgba(34, 197, 94, 0.15) !important;
+//   border-color: #22c55e !important;
+//   color: #86efac !important;
+  
+//   /* Add checkmark icon using pseudo-element purely via CSS */
+//   &::after {
+//     content: "✓";
+//     position: absolute;
+//     right: 20px;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     font-weight: bold;
+//     color: #22c55e;
+//   }
+// }
+
+// .wrong {
+//   background-color: rgba(239, 68, 68, 0.15) !important;
+//   border-color: #ef4444 !important;
+//   color: #fca5a5 !important;
+//   opacity: 0.8;
+
+//   &::after {
+//     content: "✕";
+//     position: absolute;
+//     right: 20px;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     font-weight: bold;
+//     color: #ef4444;
+//   }
+// }

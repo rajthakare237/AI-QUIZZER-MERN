@@ -1,0 +1,65 @@
+/* 1. Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 2. Ensure HTML and Body take full space */
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: 'Inter', sans-serif; /* Explicitly set Inter if you are using it */
+  background: #020617; /* Ensure background matches root */
+}
+
+/* 3. Root container settings */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  background: #020617;
+}
+
+/* --- IMPROVED SCROLLBAR UI --- */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  /* Track (transparent) | Thumb (Slate-600) */
+  scrollbar-color: #475569 transparent; 
+}
+
+/* Chrome, Edge, Safari */
+*::-webkit-scrollbar {
+  width: 10px;  /* Vertical scrollbar width */
+  height: 10px; /* Horizontal scrollbar height */
+}
+
+/* The Track (Background) */
+*::-webkit-scrollbar-track {
+  background: transparent; /* Keeps UI clean */
+  margin-block: 4px; /* Tiny margin at top/bottom */
+}
+
+/* The Handle (Thumb) */
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(99, 102, 241, 0.4); /* Subtle Indigo by default */
+  border-radius: 99px; /* Pill shape */
+  
+  /* This creates the "Floating" effect */
+  border: 3px solid #020617; /* Matches body bg to create a gap */
+}
+
+/* Handle on Hover */
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #6366f1; /* Solid Neon Indigo */
+  border: 2px solid #020617; /* Thinner border makes it expand slightly */
+}
+
+/* Handle on Active (Clicking) */
+*::-webkit-scrollbar-thumb:active {
+  background-color: #4f46e5; /* Darker Indigo when grabbing */
+}

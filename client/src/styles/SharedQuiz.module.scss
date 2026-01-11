@@ -1,0 +1,48 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.topic {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.difficulty {
+  color: #888;
+  margin-top: 4px;
+}
+
+.questionCard {
+  background: #111;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.question {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.options {
+  display: grid;
+  gap: 10px;
+}
+
+.option {
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: #1c1c1c;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.option:hover {
+  background: #2a2a2a;
+}
