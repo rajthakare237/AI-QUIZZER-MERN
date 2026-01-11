@@ -81,15 +81,4 @@
 | **Backend** | Node.js, Express.js |
 | **Database** | MongoDB (Mongoose) |
 | **Authentication** | JWT, BCrypt |
-| **AI Integration** | OpenAI API / Gemini API |
-
----
-
-## ⚡ Getting Started
-
-Follow these steps to set up the project locally.
-
-### 1. Clone the Repository
-```bash
-git clone [https://github.com/rajthakare237/AI-QUIZZER-MERN.git](https://github.com/rajthakare237/AI-QUIZZER-MERN.git)
-cd AI-QUIZZER-MERN
+| **AI Integration** | OpenAI API |
