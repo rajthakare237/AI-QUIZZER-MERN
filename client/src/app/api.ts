@@ -4,7 +4,7 @@ export const api = createApi({
   reducerPath: "api",
 
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:4000/api",
+    baseUrl: `${import.meta.env.VITE_API_URL}/api`,
     prepareHeaders: (h) => {
       const t = localStorage.getItem("token");
       if (t) h.set("authorization", `Bearer ${t}`);
