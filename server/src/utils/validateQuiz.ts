@@ -27,17 +27,3 @@ export function validateQuiz(q: Quiz) {
     }
   });
 }
-
-
-
-// type Question = { options: any[]; correctIndex: number };
-
-// export function validateQuiz(q: any) {
-//   if (!q?.questions?.length) throw new Error('Invalid quiz');
-
-//   q.questions.forEach((x: Question) => {
-//     if (x.options.length !== 4) throw new Error('Options must be 4');
-//     if (x.correctIndex < 0 || x.correctIndex > 3)
-//       throw new Error('Invalid correctIndex');
-//   });
-// }
