@@ -1,4 +1,4 @@
-import OpenAI from 'openai';
+import { GoogleGenAI } from '@google/genai';
 import { cache } from '../utils/cache.js';
 import { validateQuiz } from '../utils/validateQuiz.js';
 
@@ -12,11 +12,12 @@ type Quiz = {
   questions: Question[];
 };
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY as string
+// Initialize Gemini Client
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY as string
 });
 
-export async function generateQuizViaOpenAI(
+export async function generateQuizViaGemini(
   topic: string,
   no: number,
   difficulty: 'easy' | 'medium' | 'hard'
@@ -24,41 +25,39 @@ export async function generateQuizViaOpenAI(
   const key = `${topic}-${no}-${difficulty}`;
   if (cache.has(key)) return cache.get(key) as Quiz;
 
-  const res = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
-    response_format: { type: 'json_object' },
-    messages: [
-      {
-        role: 'system',
-        content: 'You are a quiz generator. Return ONLY valid JSON.'
-      },
-      {
-        role: 'user',
-        content: `
+  const prompt = `
 Generate ${no} MCQs on "${topic}" (${difficulty})
 
 Schema:
 {
   "questions": [
     {
-      "question": string,
-      "options": [string, string, string, string],
-      "correctIndex": number
+      "question": "string",
+      "options": ["string", "string", "string", "string"],
+      "correctIndex": 0
     }
   ]
 }
-`
-      }
-    ],
-    temperature: 0.3
+`;
+
+  // Call Gemini using the recommended Flash model
+  const response = await ai.models.generateContent({
+    model: 'gemini-2.5-flash',
+    contents: prompt,
+    config: {
+      // systemInstruction replaces OpenAI's 'system' role
+      systemInstruction: 'You are a quiz generator. Return ONLY valid JSON.',
+      // Forces Gemini to output parseable JSON
+      responseMimeType: 'application/json',
+      temperature: 0.3
+    }
   });
 
-  const message = res.choices?.[0]?.message?.content;
+  const message = response.text;
   if (!message) {
-    throw new Error('OpenAI returned empty response');
+    throw new Error('Gemini returned empty response');
   }
 
-  // ✅ THIS WAS THE MISSING LINE
   const quiz = JSON.parse(message) as Quiz;
 
   validateQuiz(quiz);

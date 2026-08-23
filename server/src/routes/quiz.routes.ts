@@ -3,7 +3,7 @@ import { Router } from 'express';
 import type { Request, Response } from 'express';
 import { requireAuth } from '../middlewares/auth.middleware.js';
 import { quizLimiter } from '../middlewares/rateLimit.middleware.js';
-import { generateQuizViaOpenAI } from '../services/openai.service.js';
+import { generateQuizViaGemini } from '../services/openai.service.js';
 import { Quiz } from '../models/Quiz.js';
 import { Attempt } from '../models/Attempt.js';
 import crypto from "crypto";
@@ -32,7 +32,7 @@ r.post('/generate', requireAuth, quizLimiter, async (req: Request, res: Response
       return res.status(400).json({ error: 'Max 50 questions allowed' });
     }
 
-    const quiz = await generateQuizViaOpenAI(
+    const quiz = await generateQuizViaGemini(
       topic,
       noOfQuestions,
       difficulty
